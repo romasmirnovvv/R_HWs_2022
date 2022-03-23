@@ -1,10 +1,10 @@
 ---
 title: "HW 1"
 output:
+  pdf_document: default
+  html_notebook: default
   html_document:
     df_print: paged
-  html_notebook: default
-  pdf_document: default
 ---
 ```{r}
 library(ggplot2)
@@ -23,12 +23,11 @@ using the Monte Carlo method.
 
 You can read about this method in any resource.
 
-For examplle:
-https://www.mathonweb.com/entrtain/monte/t_monte.htm
+For examplle: [link](https://www.mathonweb.com/entrtain/monte/t_monte.html)
 
-This is a graphical representation of the area:
+This is a graphical representation of the equations:
 
-```{r}
+```{r fig.align="center", echo = FALSE,fig.width = 14,fig.height=10}
 X <- seq(from=-pi/2, to=pi/2, length.out=100)
 Y <- 2*abs(X) - pi
 Y <- c(Y, abs(sin(2*X)))
