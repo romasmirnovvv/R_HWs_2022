@@ -1,0 +1,119 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+ctrl+alt+I to create chunk
+
+ctrl+enter to run line
+
+ctrl+shift+enter to run chunk
+
+```{r}
+x <- 'hello' #an expression, assignment
+x      # auto print 
+```
+
+```{r}
+print(x) #explicit print
+```
+
+```{r}
+1:10 #sequence return numeric vector
+```
+
+```{r}
+class(1:10)
+```
+
+```{r}
+seq(from=1, to=20, by=2)
+```
+
+### Assignment:
+ <- IS an assignment operator
+ 
+ =  IS NOT (although it will work)
+ 
+### Special numbers:
+
+Inf
+
+NaN (not a number)
+
+NA  (not available)
+
+ 
+```{r}
+print(1/ 0)
+print(1/Inf)
+print(Inf*-Inf)
+print(Inf/Inf)
+print(0/0)
+print(Inf*0)
+```
+
+NaN is numeric
+
+NA values can have any class
+
+NaN is also NA
+
+NA is not NaN
+
+```{r}
+x <- c(NaN, NA)
+print(is.nan(x))
+print(is.na(x))
+```
+
+
+### Vectors
+
+contain values of the same class
+
+
+```{r}
+y <- 25
+class(y)
+is.vector(y)
+```
+
+```{r}
+y <- c(1:6, 5:1)
+class(y)
+```
+
+```{r}
+y <- c()
+y
+is.vector(y)
+```
+
+```{r}
+y <- logical(length = 5)
+y
+class(y)
+```
+
+
+### Coercion 
+
+automatic and explicit
+
+```{r}
+c(T, FALSE, 5)
+c(TRUE, "FALSE", 5)
+```
+
+Mixture with character will be coerced to character
+
+Mixture of numeric and logical will be coerced to numeric
+
+```{r}
+as.numeric(c('1', 2, 3))
+as.logical(c(1, 0, 5, T))
+as.character(c(T, F))
+as.numeric(c('a', 'b'))
+```
+

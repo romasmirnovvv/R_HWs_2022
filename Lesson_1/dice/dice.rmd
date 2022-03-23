@@ -1,0 +1,26 @@
+---
+title: "R Notebook"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+Let us create dice roll model
+
+```{r}
+roll <- function(){
+  dice <- sample(1:6, 2, replace = TRUE, prob = c(1/7, 1/7, 1/7, 1/7, 1/7, 2/7))
+  return(sum(dice))
+}
+```
+
+```{r}
+roll()
+```
+```{r}
+rolls <- replicate(10000, roll())
+qplot(rolls, binwidth = 1)
+```
+
+
+

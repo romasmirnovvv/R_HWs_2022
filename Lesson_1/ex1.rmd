@@ -1,0 +1,35 @@
+---
+title: "R Notebook"
+---
+
+```{r}
+library(dplyr)
+library(leaflet)
+```
+
+
+```{r}
+m <- leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(lng=30.308, lat=59.957, popup="ITMO University")
+m  # Print the map
+```
+
+```{r}
+m <- leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(lng=174.768, lat=-36.852, popup="The birthplace of R")
+m  # Print the map
+
+```
+
+$$
+  x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+$$
+```{python3}
+for a in ('Hello', 'R', 'world'):
+  print(a, end = ' ')
+```
+
+
+
