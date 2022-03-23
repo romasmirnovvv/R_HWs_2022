@@ -1,5 +1,5 @@
 ---
-title: "R Notebook"
+title: "2 dice model"
 output:
   pdf_document: default
   html_notebook: default
@@ -8,15 +8,31 @@ output:
 Let us create dice roll model
 
 ```{r}
+library(ggplot2)
+```
+
+Fair dice:
+```{r}
+roll <- function(){
+  dice <- sample(1:6, 2, replace = TRUE)
+  return(sum(dice))
+}
+```
+
+```{r}
+rolls <- replicate(10000, roll())
+qplot(rolls, binwidth = 1)
+```
+
+Unfair dice:
+
+```{r}
 roll <- function(){
   dice <- sample(1:6, 2, replace = TRUE, prob = c(1/7, 1/7, 1/7, 1/7, 1/7, 2/7))
   return(sum(dice))
 }
 ```
 
-```{r}
-roll()
-```
 ```{r}
 rolls <- replicate(10000, roll())
 qplot(rolls, binwidth = 1)
