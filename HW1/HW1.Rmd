@@ -1,0 +1,43 @@
+---
+title: "HW 1"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+---
+```{r}
+library(ggplot2)
+```
+
+**Task**: find the area of a figure bounded by curves given by the equation:
+
+$$
+ y = 2|x| - \pi, x \in [-{pi\over2},{pi\over2}]
+$$
+$$
+ y = |sin(2x)|, x \in [-{pi\over 2},{pi\over 2}]
+$$
+
+using the Monte Carlo method.
+
+You can read about this method in any resource.
+
+For examplle:
+https://www.mathonweb.com/entrtain/monte/t_monte.htm
+
+This is a graphical representation of the area:
+
+```{r}
+X <- seq(from=-pi/2, to=pi/2, length.out=100)
+Y <- 2*abs(X) - pi
+Y <- c(Y, abs(sin(2*X)))
+X <- c(X, X)
+qplot(X, Y)
+```
+
+To generate random dots you may use **runif** function,
+
+Use help function "?runif" to understand how it works.
+
+
