@@ -1,0 +1,77 @@
+---
+title: "Factors"
+output: html_notebook
+---
+
+Representing of categorical data
+
+```{r}
+gender <- factor(c('M','F','M', 'M', 'F'))
+gender
+?factor
+```
+
+```{r}
+typeof(gender)
+class(gender)
+attributes(gender)
+```
+
+```{r}
+levels(gender)
+```
+
+You can see exactly how R is storing your factor with unclass:
+
+```{r}
+unclass(gender)
+```
+
+Order of the levels in the factor doesn’t make factor ordered itself! 
+
+```{r}
+gender <- factor(c('M','F','M', 'M', 'F'), levels = c('M', 'F'))
+gender
+```
+```{r}
+gender[1] > gender[2]
+```
+```{r}
+temperature <- factor(c('warm', 'hot', 'warm', 'warm', 'cold', 'warm', 'hot'), 
+                      levels = c('cold', 'warm', 'hot'), ordered = TRUE)
+temperature
+
+names(temperature) <- c('Mon', 'Tue', 'Wen', 'Thu', 'Fri', 'Sat', 'Sun')
+attributes(temperature)
+```
+
+```{r}
+temperature['Mon']
+
+temperature['Mon'] < temperature['Tue']
+temperature
+
+```
+
+Summary on categorical data
+
+```{r}
+table(temperature)
+```
+
+```{r}
+summary(temperature)
+```
+
+Factor into character vector
+
+```{r}
+as.character(temperature)
+```
+
+
+
+
+
+
+

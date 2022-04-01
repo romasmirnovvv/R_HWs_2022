@@ -1,0 +1,205 @@
+---
+title: "Matrix"
+output: html_notebook
+---
+
+What is matrix?
+
+This is a vector with attribute dim that contains matrix dimensions (in 2D: n_row, n_cols)
+
+```{r}
+m <- 1:4
+m
+```
+
+```{r}
+attributes(m)
+dim(m)
+typeof(m)
+class(m)
+```
+
+```{r}
+dim(m) <- c(1, 4)
+m
+dim(m) <- c(2, 2)
+m
+```
+
+```{r}
+typeof(m)
+class(m)
+attributes(m)
+```
+
+matrix() function
+
+```{r}
+?matrix
+```
+
+```{r}
+matrix()
+```
+
+```{r}
+matrix(ncol = 3, nrow = 3)
+```
+
+```{r}
+matrix(data = 1:6, ncol = 2)
+```
+
+```{r}
+matrix(1:6, ncol = 2, byrow = TRUE)
+```
+
+Operations with matrices:
+
+column-binding
+
+```{r}
+a <- 1:6
+b <- 4:6
+cbind(a,b)
+```
+
+```{r}
+a <- matrix(1:6, ncol = 2)
+b <- matrix(7:12, ncol = 2)
+a
+b
+cbind(a,b)
+```
+
+row-binding
+
+```{r}
+rbind(a,b)
+```
+
+name attributes
+
+```{r}
+c <- c(1:3)
+names(c) <- c('a', 'b', 'b')
+c
+```
+
+```{r}
+m
+```
+
+
+
+```{r}
+m <- matrix(1:4, ncol = 2)
+m
+rownames(m) <- c('first_row', 'second_row')
+colnames(m) <- c('first_col', 'second_col')
+attributes(m)
+m
+```
+
+```{r}
+a <- 1:3
+b <- 4:6
+m <- cbind(a,b)
+m
+rownames(m)
+colnames(m)
+```
+
+
+```{r}
+r_names <- letters[1:3]
+rownames(m) <- r_names
+m
+```
+
+```{r}
+attributes(m)
+```
+
+```{r}
+m
+```
+
+```{r}
+rownames(m) <- c('first', 'second', 'third')
+```
+
+
+
+Summation
+
+```{r}
+sum(m)
+```
+
+```{r}
+colSums(m)
+rowSums(m)
+```
+
+element-wise operations
+
+```{r}
+m1 <- matrix(1, ncol = 2, nrow = 2)
+m1
+```
+
+```{r}
+m1 / 100
+```
+
+```{r}
+m_diag <- diag(ncol = 2, nrow = 2)
+m_diag
+```
+
+```{r}
+m_diag
+```
+```{r}
+m1
+```
+
+
+```{r}
+m1 * m_diag
+```
+
+Matrix multiplication and transpose
+
+```{r}
+m1 %*% m_diag
+m_diag %*% m1
+```
+
+```{r}
+m2 <- matrix(1:4, ncol = 2)
+m2
+m1 %*% m2
+m2 %*% m1
+```
+
+```{r}
+m2
+t(m2)
+```
+
+Arrays
+
+high dimensional matrices or tensors with dimensions > 2
+
+```{r}
+a <- array(1:8, dim = c(2, 2, 2))
+a
+a[1]
+a[,,1]
+a[1,,]
+a[,1,1]
+```
+
+

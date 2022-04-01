@@ -1,0 +1,74 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+l <- list(TRUE, 24, "Male", "Duglas Adams")
+l
+```
+
+```{r}
+names(l) <- c("Healthy", "Age", "Gender", "Full_name")
+l
+attributes(l)
+```
+
+```{r}
+l <- list(Healthy = TRUE,
+          Age = 24,
+          Gender = "Male",
+          Full_name = "Duglas Adams")
+l
+```
+
+```{r}
+typeof(l)
+class(l)
+attributes(l)
+
+typeof(attributes(l))
+```
+
+Selection
+
+```{r}
+l['Age']
+typeof(l['Age'])
+
+l$Age
+
+typeof(l[2])
+
+l[[2]]
+```
+
+```{r}
+unlist(l)
+typeof(unlist(l))
+unlist(l)[1]
+```
+
+Appending
+
+```{r}
+my_cats <- list(cats = c('Snezhok', 'Pushok'))
+my_cats
+my_dogs <- list(dogs = c('Bobik', 'Sharik'))
+
+my_pets <- c(my_cats, my_dogs)
+
+my_pets
+my_pets$cats
+```
+
+```{r}
+str(my_pets)
+```
+
+```{r}
+summary(my_pets)
+class(my_pets$cats)
+```
+
+

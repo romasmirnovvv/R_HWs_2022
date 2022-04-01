@@ -1,0 +1,100 @@
+---
+title: "Data Frames"
+output: html_notebook
+---
+
+Can be read using read.table() and read.csv
+
+Data Frame creation
+
+```{r}
+?data.frame
+```
+
+```{r}
+name <- c("Ivan", "Maria", "Oleg")
+weight <- c(85, 60, 120)
+obesity <- c(F, F, T)
+
+patients <- data.frame(name, weight, obesity)
+patients
+```
+
+```{r}
+typeof(patients)
+class(patients)
+attributes(patients)
+
+```
+
+How to brows your data
+
+```{r}
+head(patients, 2)
+tail(patients, 2)
+```
+
+```{r}
+summary(patients)
+```
+
+```{r}
+dim(patients)
+```
+
+```{r}
+str(patients)
+```
+
+Subsetting
+
+```{r}
+patients$name
+```
+
+```{r}
+patients[['weight']]
+```
+
+```{r}
+patients[[1,1]]
+```
+
+
+Loading data
+
+```{r}
+?read.csv
+df <- read.csv('deck.csv')
+head(df)
+```
+
+```{r}
+summary(df)
+```
+
+```{r}
+typeof(df$suit)
+```
+
+```{r}
+df <- read.table('deck.csv', sep = ',', header = T)
+df
+df$suit <- as.factor(df$suit)
+```
+
+```{r}
+summary(df)
+```
+
+```{r}
+typeof(df$suit)
+```
+
+writing data
+
+```{r}
+?write.csv
+write.csv(patients, file = "patients.csv", row.names = FALSE)
+```
+

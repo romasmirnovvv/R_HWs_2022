@@ -1,0 +1,73 @@
+---
+title: "HW2"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+## Black Jack statistics
+
+Dear students in your second homework I want you to model Black Jack classic card game.
+
+You can read rules here: https://www.officialgamerules.org/blackjack
+
+We have a csv file with a classic 52 card deck:
+
+```{r}
+deck <- read.csv('deck.csv')
+head(deck)
+```
+
+I want you to model a game with shown percentage of winning.
+
+Assume that casino has 4 full decks (208 cards).
+
+Game starts when dealer shuffle all cards and give 2 card for you and 2 for himself.
+
+To simplify task dealer will always have 2 cards and only you can get additional cards.
+Second thing lets assume that Ace has always 1 point.
+
+You win if your card sum is more or equal than dealers card sum.
+
+If your card sum more than 21 you loose.
+
+each turn I want you to print these game state:
+
+> Dealers hand:
+
+>    king spades 10
+
+>    seven hearts 7
+
+>    sum 17
+
+>
+
+> Your hand:
+
+>    king spades 10
+
+>    two hearts 2
+
+>    six spades 6
+
+>    sum 18
+
+>
+
+> chances 100%
+
+
+So you need to:
+
+* create suitable objects for casino deck, dealer hand, and your hand.
+
+* implement shuffle_deck() function
+
+* implement start_game() function that shuffles deck, deals 2 cards for you and dealer. and prints state
+
+* implement deal() function that deals you a card and prints state
+
+* implement stop_game() function that prints result: win or loose
+
+After implementation please show two examples of working game and knit rmd to .pdf
