@@ -5,11 +5,13 @@ output:
   html_notebook: default
 ---
 
-## Black Jack statistics
+## Black Jack probabilities
 
 Dear students in your second homework I want you to model Black Jack classic card game.
 
 You can read rules here: https://www.officialgamerules.org/blackjack
+
+Goals of this HW is to train your skills of using r-base objects and to remind the basics of probability theory.
 
 We have a csv file with a classic 52 card deck:
 
