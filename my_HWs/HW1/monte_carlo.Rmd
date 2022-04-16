@@ -1,0 +1,71 @@
+---
+title: "HW1"
+author: "Roman Smirnov"
+date: "4/6/2022"
+output: pdf_document
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+setwd('~/ITMO_EDUCATION/second_term/R')
+library(ggplot2)
+```
+
+
+$$
+ y = 2|x| - \pi, x \in [-{pi\over2},{pi\over2}], y >= -\pi
+$$
+
+$$
+ y = |sin(2x)|, x \in [-{pi\over 2},{pi\over 2}], y \in [0, 1]
+$$
+
+# Figure boundaries
+
+$$
+ x \in [-{pi\over 2},{pi\over 2}], y \in [-\pi, 1]
+$$
+
+#1. Generate dataset of points:
+
+```{r}
+n_runs <- 5000
+x = runif(n_runs, min = -pi/2, max = pi/2)
+y = runif(n_runs, min = -pi, max = 1)
+points <- data.frame(x,y)
+head(points)
+```
+
+## Based on two equasions create a heart area
+
+```{r}
+figure_area <- y >= 2*x-pi & y >= -2*x-pi & y <= sqrt(sin(2*x)^2)
+```
+
+#2. Plot generated points:
+
+```{r}
+ggplot(points) +
+  geom_point(aes(x = x, y = y, color = figure_area), size = 0.4) +
+  theme_minimal()
+```
+
+#3. Based on this formula calculate the area of the figure:
+
+$$
+S_{obj} = \frac{N_{in} * S_{Srec}}{N_{t}}
+$$
+Sobj - area of an object
+Srec -area of a rectangle where the figure is located
+Nin - number of points inside the figure
+Nt - total number of points
+
+```{r}
+rect_area <- (pi/2 + pi/2) * (1 + pi)
+ratio <- sum(figure_area)/n_runs
+obj_area <- rect_area * ratio
+obj_area
+```
+
