@@ -1,0 +1,157 @@
+---
+title: "HW3"
+author: "Roman Smirnov"
+date: '2022-06-09'
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T)
+```
+
+```{r}
+setwd('~/ITMO_EDUCATION/second_term/R/classes/HW3')
+library(RIdeogram)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+gene_mapping <- read.csv('gene_mapping.tsv', sep='\t')
+DONGOLA_genes <- read.csv("DONGOLA_genes.tsv", sep='\t')
+ZANU_genes <- read.csv("ZANU_genes.tsv", sep='\t')
+```
+
+### 1.Filter only interesting chromosomes (for ZANU)
+
+```{r}
+
+gene_mapping <- filter(gene_mapping, contig==c('2', '3', 'X'))
+gene_mapping %>% head()
+unique(gene_mapping$contig)
+```
+
+### 2.Reformating the gene_mapping dataframe (DONG column):
+
+```{r}
+DONG_mapping <- data.frame(do.call('rbind', strsplit(as.character(gene_mapping$DONG),',',fixed=TRUE)))
+colnames(DONG_mapping) <-  c('sequence_id', 'middle_coor_gene', 'strand', 'gene_length', 'dongo_name')
+head(DONG_mapping, 3)
+
+gene_mapping <- cbind(gene_mapping[0:6], DONG_mapping)
+head(gene_mapping, 3)
+```
+
+### 3.Based on NCBI data let's make mapping of chromosomes by sequence_id
+
+```{r}
+gene_mapping$sequence_id <- as.character(gene_mapping$sequence_id)
+gene_mapping$sequence_id[gene_mapping$sequence_id == 'NC_053517.1'] <- '2'
+gene_mapping$sequence_id[gene_mapping$sequence_id == 'NC_053518.1'] <- '3'
+gene_mapping$sequence_id[gene_mapping$sequence_id == 'NC_053519.1'] <- 'X'
+head(gene_mapping, 3)
+```
+
+### 4.Changing the gene name column:
+
+```{r}
+gene_mapping$dongo_name <- gsub("DONG_", "", gene_mapping$dongo_name)
+head(gene_mapping, 3)
+```
+
+### 5.Calculate the distance between genes:
+
+```{r}
+gene_mapping$distance <- abs(gene_mapping$middle.position - as.integer(gene_mapping$middle_coor_gene))
+```
+
+### 6.Keep only genes which are shared between species
+
+```{r}
+gene_mapping <- subset(gene_mapping, as.character(contig) == as.character(sequence_id))
+```
+
+### 7. Drop duplicated genes based on Distance
+
+```{r}
+gene_mapping_drop <- gene_mapping[order(gene_mapping["distance", ])]
+gene_mapping_drop <-  gene_mapping[!duplicated(gene_mapping$name), ]
+gene_mapping_drop %>% head(3)
+```
+
+### 8. Build dataframes for ideogram
+
+#### 8.1 karyotype df:
+
+```{r}
+karyotype_df <- data.frame(matrix(ncol = 7, nrow = 0))
+colnames(karyotype_df) <- c("Chr", "Start", "End", "fill", "species", "size", "color")
+karyotype_df
+```
+
+#### 8.2 add Dongo data
+
+```{r}
+karyotype_df <- rbind(karyotype_df, data.frame(Chr= c('X', '2', '3'),
+                                               Start = c(1, 1, 1),
+                                               End = c(26910000, 111990000, 95710000),
+                                               fill='969696', 
+                                               species='Dongola', 
+                                               size=12,
+                                               color='252525'))
+karyotype_df %>% head(3)
+```
+
+### 9. Synteny df
+
+#### 9.1 rename columns
+
+```{r}
+colnames(DONGOLA_genes) <- c('ID_1', 'Start_1', 'End_1', 'Strand_1')
+colnames(ZANU_genes) <- c('ID_2', 'Start_2', 'End_2', 'Strand_2')
+
+synteny_df <- gene_mapping_drop
+synteny_df <- synteny_df %>% rename(Species_dongo_1 = sequence_id)
+synteny_df <- synteny_df %>% rename(Species_zanu_2 = contig)
+synteny_df <- merge(synteny_df, DONGOLA_genes, by.x='dongo_name', by.y='ID_1')
+synteny_df <- merge(synteny_df, ZANU_genes, by.x='name', by.y='ID_2')
+
+synteny_df$Species_dongo_1 <- as.character(synteny_df$Species_dongo_1)
+synteny_df$Species_zanu_2 <- as.character(synteny_df$Species_zanu_2)
+synteny_df$Species_dongo_1[synteny_df$Species_dongo_1 == 'X'] <- 1
+synteny_df$Species_zanu_2[synteny_df$Species_zanu_2 == 'X'] <- 1
+
+fill_blue <- '0000FF'
+fill_red <- 'CC3300'
+
+synteny_df %>% head(3)
+```
+
+### 9.2 color the same genes by red. otherwise, by blue:
+
+```{r}
+
+synteny_df$fill <- ifelse(synteny_df$Strand_1 == synteny_df$Strand_2, fill_red, fill_blue)
+synteny_df$fill %>% head(3)
+
+
+synteny_df_filter <- synteny_df[c('Species_dongo_1', 'Start_1', 'End_1', 'Species_zanu_2', 'Start_2', 'End_2', 'fill')]
+synteny_df_filter %>% head(3)
+
+synteny_df_filter$Species_dongo_1 <-  as.numeric(synteny_df_filter$Species_dongo_1)
+synteny_df_filter$Species_zanu_2 <-  as.numeric(synteny_df_filter$Species_zanu_2)
+karyotype_df$Chr <- as.character(karyotype_df$Chr)
+```
+
+### 10.Plot the ideogram
+
+```{r}
+# ideogram(karyotype=karyotype_df, synteny=synteny_df_filter)
+# convertSVG("chromosome.svg", device="png")
+```
+
+```{r pressure, echo=FALSE, fig.cap="A caption", out.width = '100%'}
+knitr::include_graphics("~/ITMO_EDUCATION/second_term/R/classes/HW3/chromosome.png")
+```
+
